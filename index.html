@@ -6,265 +6,294 @@
 <title>兒童遊戲學習網</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Noto Sans TC',sans-serif;scroll-behavior:smooth}
-body{background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);min-height:100vh}
-/* Header */
-.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;text-align:center;padding:50px 20px 40px;position:relative;overflow:hidden}
-.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:float 10s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,30px)}}
-.header h1{font-size:3em;text-shadow:2px 2px 4px rgba(0,0,0,.2);position:relative;z-index:1}
-.header .sub{font-size:1.1em;opacity:.9;margin-top:5px;position:relative;z-index:1}
-.header .author{font-size:.95em;opacity:.7;margin-top:10px;position:relative;z-index:1}
-.header .nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:25px;position:relative;z-index:1}
-.header .nav a{background:rgba(255,255,255,.2);backdrop-filter:blur(5px);color:#fff;text-decoration:none;padding:10px 20px;border-radius:50px;font-size:.9em;transition:.3s;border:1px solid rgba(255,255,255,.3)}
-.header .nav a:hover{background:rgba(255,255,255,.35);transform:translateY(-2px)}
-/* Section */
-.section{max-width:900px;margin:30px auto;padding:0 15px}
-.game-box{background:#fff;border-radius:25px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,.08);margin-bottom:30px;transition:.3s}
-.game-box:hover{box-shadow:0 12px 40px rgba(0,0,0,.12)}
-.game-box h2{font-size:1.8em;margin-bottom:5px;display:flex;align-items:center;gap:10px}
-.game-box .tag{display:inline-block;font-size:.7em;padding:3px 12px;border-radius:50px;color:#fff;margin-bottom:15px}
-.tag-math{background:linear-gradient(135deg,#f093fb,#f5576c)}
-.tag-color{background:linear-gradient(135deg,#4facfe,#00f2fe)}
-.tag-memory{background:linear-gradient(135deg,#43e97b,#38f9d7);color:#333}
-.tag-abc{background:linear-gradient(135deg,#fa709a,#fee140);color:#333}
+body{background:linear-gradient(180deg,#f0f2ff 0%,#e8ecf8 100%);min-height:100vh}
+/* ===== Header ===== */
+.hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:50px 20px 40px;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:2.8em;color:#fff;text-shadow:0 3px 10px rgba(0,0,0,.15);position:relative;z-index:1}
+.hero .sub{font-size:1.1em;color:rgba(255,255,255,.85);margin-top:5px;position:relative;z-index:1}
+.hero .author{font-size:.95em;color:rgba(255,255,255,.6);margin-top:10px;position:relative;z-index:1}
+/* ===== Reflection at top ===== */
+.top-ref{max-width:900px;margin:0 auto;padding:0 15px;transform:translateY(-30px);position:relative;z-index:2}
+.ref-box{background:#fff;border-radius:20px;padding:28px 30px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.ref-box h2{font-size:1.4em;color:#4a3790;text-align:center;margin-bottom:3px}
+.ref-box .author{text-align:center;color:#888;font-size:.85em;margin-bottom:15px}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.ref-grid{grid-template-columns:1fr}}
+.r-item{background:linear-gradient(135deg,#f8f9ff,#eeeff8);border-radius:14px;padding:16px 18px;border-left:4px solid #667eea}
+.r-item:nth-child(2){border-left-color:#f093fb}
+.r-item:nth-child(3){border-left-color:#43e97b}
+.r-item:nth-child(4){border-left-color:#fa709a}
+.r-item h3{font-size:1em;color:#4a3790;margin-bottom:4px}
+.r-item p{font-size:.85em;color:#555;line-height:1.6}
+/* ===== Entry Grid ===== */
+.entry-section{max-width:900px;margin:0 auto;padding:0 15px}
+.entry-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:25px}
+.entry-card{background:#fff;border-radius:20px;padding:25px 20px;text-align:center;cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.07);transition:all .3s;position:relative;overflow:hidden}
+.entry-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px}
+.entry-card:nth-child(1)::before{background:linear-gradient(90deg,#f093fb,#f5576c)}
+.entry-card:nth-child(2)::before{background:linear-gradient(90deg,#4facfe,#00f2fe)}
+.entry-card:nth-child(3)::before{background:linear-gradient(90deg,#43e97b,#38f9d7)}
+.entry-card:nth-child(4)::before{background:linear-gradient(90deg,#fa709a,#fee140)}
+.entry-card:hover{transform:translateY(-5px);box-shadow:0 12px 35px rgba(0,0,0,.12)}
+.entry-card .icon{font-size:3em;margin-bottom:6px}
+.entry-card .name{font-size:1.2em;font-weight:700;color:#333}
+.entry-card .desc{font-size:.85em;color:#888;margin-top:3px}
+.entry-card .play-btn{display:inline-block;margin-top:10px;padding:5px 18px;border-radius:50px;font-size:.8em;font-weight:600;color:#fff}
+.entry-card:nth-child(1) .play-btn{background:linear-gradient(90deg,#f093fb,#f5576c)}
+.entry-card:nth-child(2) .play-btn{background:linear-gradient(90deg,#4facfe,#00f2fe)}
+.entry-card:nth-child(3) .play-btn{background:linear-gradient(90deg,#43e97b,#38f9d7);color:#333}
+.entry-card:nth-child(4) .play-btn{background:linear-gradient(90deg,#fa709a,#fee140);color:#333}
+/* ===== Game Sections ===== */
+.game-wrap{max-width:900px;margin:0 auto 25px;padding:0 15px}
+.game-box{background:#fff;border-radius:20px;padding:28px 25px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.game-box h2{font-size:1.5em;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.game-tag{display:inline-block;font-size:.65em;padding:2px 12px;border-radius:50px;color:#fff;margin-bottom:12px;font-weight:600}
+.game-tag.t1{background:linear-gradient(90deg,#f093fb,#f5576c)}
+.game-tag.t2{background:linear-gradient(90deg,#4facfe,#00f2fe)}
+.game-tag.t3{background:linear-gradient(90deg,#43e97b,#38f9d7);color:#333}
+.game-tag.t4{background:linear-gradient(90deg,#fa709a,#fee140);color:#333}
 /* Math */
-.math-area{text-align:center;padding:20px 0}
-.math-area .expr{font-size:3em;font-weight:700;color:#4a3790;margin-bottom:5px}
-.math-area .expr .op{color:#f5576c;margin:0 8px}
-.math-area .expr .eq{color:#888;margin:0 8px}
-.math-options{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:15px 0}
-.math-opt{width:70px;height:70px;font-size:1.8em;font-weight:700;border:none;border-radius:18px;cursor:pointer;transition:.3s;background:#667eea;color:#fff;box-shadow:0 4px 12px rgba(102,126,234,.4)}
-.math-opt:hover{transform:translateY(-4px);box-shadow:0 6px 20px rgba(102,126,234,.5)}
-.math-opt.correct{background:#43e97b;box-shadow:0 4px 12px rgba(67,233,123,.4)}
-.math-opt.wrong{background:#f5576c;box-shadow:0 4px 12px rgba(245,87,108,.4);animation:shake .4s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.math-display{text-align:center;padding:12px 0 8px}
+.math-display .eq{font-size:2.5em;font-weight:700;color:#4a3790}
+.math-display .eq .sym{color:#f5576c;margin:0 5px}
+.math-ops{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.math-ops button{width:62px;height:62px;border:none;border-radius:14px;font-size:1.5em;font-weight:700;cursor:pointer;transition:.3s;background:#667eea;color:#fff;box-shadow:0 4px 12px rgba(102,126,234,.3)}
+.math-ops button:hover{transform:translateY(-3px)}
+.math-ops button.correct{background:#43e97b}
+.math-ops button.wrong{background:#f5576c;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 /* Color */
-.color-game{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:15px 0}
-.color-card{width:95px;height:95px;border-radius:18px;cursor:pointer;transition:.3s;border:4px solid transparent;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-.color-card:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(0,0,0,.15)}
-.color-card.matched{border-color:#43e97b;opacity:.5;pointer-events:none;transform:scale(.95)}
-.color-card.selected{border-color:#333;transform:scale(1.1);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.color-area{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:8px 0}
+.color-area .card{width:82px;height:82px;border-radius:14px;cursor:pointer;transition:.3s;border:4px solid transparent;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+.color-area .card:hover{transform:scale(1.08)}
+.color-area .card.matched{border-color:#43e97b;opacity:.4;pointer-events:none;transform:scale(.9)}
+.color-area .card.selected{border-color:#333;transform:scale(1.1)}
 /* Memory */
-.memory-game{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:380px;margin:15px auto}
-.memory-card{aspect-ratio:1;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:15px;cursor:pointer;transition:.5s;display:flex;align-items:center;justify-content:center;font-size:2.2em;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.12);user-select:none}
-.memory-card.flipped{background:#fff;color:#333;transform:rotateY(180deg);box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.memory-card.matched{background:#43e97b;color:#fff;transform:rotateY(180deg);pointer-events:none}
-.memory-info{display:flex;gap:20px;justify-content:center;font-size:1em;color:#555;margin-bottom:10px}
-.memory-info strong{color:#4a3790}
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:340px;margin:10px auto}
+.mem-grid .crd{aspect-ratio:1;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:12px;cursor:pointer;transition:.5s;display:flex;align-items:center;justify-content:center;font-size:1.8em;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.08);user-select:none}
+.mem-grid .crd.flip{background:#fff;color:#333;transform:rotateY(180deg)}
+.mem-grid .crd.done{background:#43e97b;color:#fff;transform:rotateY(180deg);pointer-events:none}
+.mem-info{display:flex;gap:20px;justify-content:center;font-size:.95em;color:#555;margin-bottom:5px}
+.mem-info strong{color:#4a3790}
 /* ABC */
-.abc-area{text-align:center;padding:15px 0}
-.abc-letter{font-size:5em;font-weight:700;color:#4a3790;line-height:1.2}
-.abc-hint{font-size:1.2em;color:#888;margin-bottom:15px}
-.abc-options{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:10px 0}
-.abc-opt{width:65px;height:65px;font-size:1.5em;font-weight:700;border:none;border-radius:15px;cursor:pointer;transition:.3s;background:#fa709a;color:#fff;box-shadow:0 4px 12px rgba(250,112,154,.4)}
-.abc-opt:hover{transform:translateY(-4px);box-shadow:0 6px 20px rgba(250,112,154,.5)}
-.abc-opt.correct{background:#43e97b;box-shadow:0 4px 12px rgba(67,233,123,.4)}
-.abc-opt.wrong{background:#999;animation:shake .4s}
-/* Buttons & Messages */
-.btn{background:#5a47a0;color:#fff;border:none;padding:10px 28px;border-radius:50px;font-size:.95em;cursor:pointer;transition:.3s;margin:5px;box-shadow:0 4px 10px rgba(90,71,160,.3)}
-.btn:hover{background:#4a3790;transform:translateY(-2px);box-shadow:0 6px 15px rgba(90,71,160,.4)}
-.btn-green{background:#43e97b;color:#333;box-shadow:0 4px 10px rgba(67,233,123,.3)}
-.btn-green:hover{background:#38d9a0;color:#fff}
-.msg{text-align:center;padding:8px 15px;border-radius:12px;margin:10px auto;display:none;font-weight:600;max-width:400px}
-.msg.show{display:block}.msg.good{background:#d4edda;color:#155724}.msg.bad{background:#f8d7da;color:#721c24}
-.score{text-align:center;font-size:1.1em;color:#555;margin-bottom:5px}
+.abc-display{text-align:center;padding:8px 0}
+.abc-display .big{font-size:4em;font-weight:700;color:#4a3790}
+.abc-display .hint{font-size:1em;color:#888;margin-bottom:8px}
+.abc-ops{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.abc-ops button{width:55px;height:55px;border:none;border-radius:12px;font-size:1.3em;font-weight:700;cursor:pointer;transition:.3s;background:#fa709a;color:#fff;box-shadow:0 4px 12px rgba(250,112,154,.3)}
+.abc-ops button:hover{transform:translateY(-3px)}
+.abc-ops button.correct{background:#43e97b}
+.abc-ops button.wrong{background:#999;animation:shake .4s}
+/* Common */
+.ctrl{text-align:center;margin:6px 0}
+.ctrl .btn{background:#5a47a0;color:#fff;border:none;padding:8px 22px;border-radius:50px;font-size:.85em;cursor:pointer;transition:.3s;box-shadow:0 4px 10px rgba(90,71,160,.2)}
+.ctrl .btn:hover{background:#4a3790;transform:translateY(-2px)}
+.ctrl .btn.g{background:#43e97b;color:#333}
+.ctrl .btn.g:hover{background:#38d9a0;color:#fff}
+.score{text-align:center;font-size:1em;color:#555;margin-bottom:4px;font-weight:500}
 .score span{color:#4a3790;font-weight:700}
-/* Reflection */
-.reflection{max-width:900px;margin:0 auto 40px;padding:0 15px}
-.reflection-box{background:#fff;border-radius:25px;padding:35px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
-.reflection-box h2{font-size:1.8em;color:#4a3790;margin-bottom:5px;text-align:center}
-.reflection-box .author{margin-bottom:20px;text-align:center}
-.reflection-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:600px){.reflection-grid{grid-template-columns:1fr}}
-.reflect-item{background:linear-gradient(135deg,#f8f9ff,#eef0ff);border-radius:18px;padding:20px;border-left:4px solid #667eea}
-.reflect-item:nth-child(2){border-left-color:#f093fb}
-.reflect-item:nth-child(3){border-left-color:#43e97b}
-.reflect-item:nth-child(4){border-left-color:#fa709a}
-.reflect-item h3{font-size:1.1em;color:#4a3790;margin-bottom:8px}
-.reflect-item p{font-size:.9em;color:#555;line-height:1.7}
+.msg{text-align:center;padding:6px 12px;border-radius:8px;margin:6px auto;display:none;font-weight:600;max-width:350px;font-size:.9em}
+.msg.show{display:block}.msg.ok{background:#d4edda;color:#155724}.msg.no{background:#f8d7da;color:#721c24}
 /* Footer */
-.footer{text-align:center;padding:25px 20px;color:#888;font-size:.85em}
-@media(max-width:600px){.header h1{font-size:2em}.game-box{padding:20px 15px}.math-area .expr{font-size:2em}}
+.footer{text-align:center;padding:18px;color:#aaa;font-size:.75em}
+@media(max-width:600px){
+  .hero h1{font-size:2em}.entry-grid{grid-template-columns:1fr}.game-box{padding:20px 15px}
+  .math-display .eq{font-size:1.8em}.mem-grid{max-width:280px}.top-ref{transform:translateY(-20px)}
+}
 </style>
 </head>
 <body>
 
 <!-- Header -->
-<div class="header">
+<div class="hero">
   <h1>🎮 兒童遊戲學習網</h1>
   <div class="sub">在遊戲中學習，快樂成長！</div>
   <div class="author">製作人：81410307 林佳瑩</div>
-  <div class="nav">
-    <a href="#game-math">🔢 數字加法</a>
-    <a href="#game-color">🎨 顏色配對</a>
-    <a href="#game-memory">🧠 記憶翻牌</a>
-    <a href="#game-abc">🔤 ABC字母</a>
-    <a href="#reflection">📝 心得</a>
-  </div>
 </div>
 
-<!-- Game 1: 數字加法 -->
-<div class="section" id="game-math">
+<!-- Reflection at top -->
+<div class="top-ref">
+<div class="ref-box">
+  <h2>📝 心得</h2>
+  <p class="author">81410307 林佳瑩</p>
+  <div class="ref-grid">
+    <div class="r-item">
+      <h3>🎯 製作動機</h3>
+      <p>希望用有趣的方式幫助小朋友學習基礎知識。傳統學習較枯燥，透過遊戲能讓學習效果更好。</p>
+    </div>
+    <div class="r-item">
+      <h3>🔧 製作過程</h3>
+      <p>選擇了數字加法、顏色配對、記憶翻牌和ABC字母四個主題，涵蓋數學、顏色辨識、記憶力與英文基礎。</p>
+    </div>
+    <div class="r-item">
+      <h3>💪 遇到的困難</h3>
+      <p>記憶翻牌需控制兩張卡片選取邏輯與翻牌計時，顏色配對則透過隨機排序確保每次排列不同。</p>
+    </div>
+    <div class="r-item">
+      <h3>🌟 收穫</h3>
+      <p>學會站在使用者角度思考，兒童介面按鈕要大、顏色要鮮豔、操作要直觀，充滿成就感。</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Entry Grid -->
+<div class="entry-section">
+<div class="entry-grid">
+  <div class="entry-card" onclick="document.getElementById('g1').scrollIntoView({behavior:'smooth'})">
+    <div class="icon">🔢</div>
+    <div class="name">數字加法</div>
+    <div class="desc">學習加法運算</div>
+    <div class="play-btn">開始遊戲</div>
+  </div>
+  <div class="entry-card" onclick="document.getElementById('g2').scrollIntoView({behavior:'smooth'})">
+    <div class="icon">🎨</div>
+    <div class="name">顏色配對</div>
+    <div class="desc">認識顏色名稱</div>
+    <div class="play-btn">開始遊戲</div>
+  </div>
+  <div class="entry-card" onclick="document.getElementById('g3').scrollIntoView({behavior:'smooth'})">
+    <div class="icon">🧠</div>
+    <div class="name">記憶翻牌</div>
+    <div class="desc">訓練記憶力</div>
+    <div class="play-btn">開始遊戲</div>
+  </div>
+  <div class="entry-card" onclick="document.getElementById('g4').scrollIntoView({behavior:'smooth'})">
+    <div class="icon">🔤</div>
+    <div class="name">ABC字母</div>
+    <div class="desc">認識英文字母</div>
+    <div class="play-btn">開始遊戲</div>
+  </div>
+</div>
+</div>
+
+<!-- Game 1 -->
+<div class="game-wrap" id="g1">
 <div class="game-box">
   <h2>🔢 數字加法</h2>
-  <span class="tag tag-math">加法練習</span>
-  <div class="score">分數：<span id="mathScore">0</span></div>
-  <div class="math-area">
-    <div class="expr">
-      <span id="num1">3</span><span class="op">+</span><span id="num2">5</span><span class="eq">=</span><span style="color:#f5576c">?</span>
-    </div>
-    <div class="math-options" id="mathOptions"></div>
+  <span class="game-tag t1">加法練習</span>
+  <div class="score">分數：<span id="s1">0</span></div>
+  <div class="math-display">
+    <div class="eq"><span id="n1">3</span><span class="sym">+</span><span id="n2">5</span><span class="sym">=</span><span style="color:#f5576c">?</span></div>
+    <div class="math-ops" id="m1"></div>
   </div>
-  <div id="mathMsg" class="msg"></div>
-  <div style="text-align:center"><button class="btn btn-green" onclick="initMath()">下一題</button></div>
+  <div id="msg1" class="msg"></div>
+  <div class="ctrl"><button class="btn g" onclick="initMath()">下一題</button></div>
 </div></div>
 
-<!-- Game 2: 顏色配對 -->
-<div class="section" id="game-color">
+<!-- Game 2 -->
+<div class="game-wrap" id="g2">
 <div class="game-box">
   <h2>🎨 顏色配對</h2>
-  <span class="tag tag-color">顏色辨識</span>
-  <p style="color:#555;margin-bottom:5px">找出相同顏色的卡片配對！</p>
-  <div class="color-game" id="colorGame"></div>
-  <div id="colorMsg" class="msg"></div>
-  <div style="text-align:center"><button class="btn btn-green" onclick="initColor()">重新開始</button></div>
+  <span class="game-tag t2">顏色辨識</span>
+  <p style="color:#888;font-size:.9em;margin-bottom:4px">找出相同顏色的卡片配對</p>
+  <div class="color-area" id="c1"></div>
+  <div id="msg2" class="msg"></div>
+  <div class="ctrl"><button class="btn g" onclick="initColor()">重新開始</button></div>
 </div></div>
 
-<!-- Game 3: 記憶翻牌 -->
-<div class="section" id="game-memory">
+<!-- Game 3 -->
+<div class="game-wrap" id="g3">
 <div class="game-box">
   <h2>🧠 記憶翻牌</h2>
-  <span class="tag tag-memory">記憶訓練</span>
-  <div class="memory-info">
-    <span>步數：<strong id="memMoves">0</strong></span>
-    <span>配對：<strong id="memMatch">0</strong>/8</span>
-  </div>
-  <div class="memory-game" id="memoryGrid"></div>
-  <div id="memMsg" class="msg"></div>
-  <div style="text-align:center"><button class="btn btn-green" onclick="initMemory()">重新開始</button></div>
+  <span class="game-tag t3">記憶訓練</span>
+  <div class="mem-info"><span>步數：<strong id="mv">0</strong></span><span>配對：<strong id="mc">0</strong>/8</span></div>
+  <div class="mem-grid" id="mem"></div>
+  <div id="msg3" class="msg"></div>
+  <div class="ctrl"><button class="btn g" onclick="initMem()">重新開始</button></div>
 </div></div>
 
-<!-- Game 4: ABC字母 -->
-<div class="section" id="game-abc">
+<!-- Game 4 -->
+<div class="game-wrap" id="g4">
 <div class="game-box">
   <h2>🔤 ABC字母</h2>
-  <span class="tag tag-abc">字母學習</span>
-  <div class="score">分數：<span id="abcScore">0</span></div>
-  <div class="abc-area">
-    <div class="abc-letter" id="abcLetter">A</div>
-    <div class="abc-hint" id="abcHint">🅰️ Apple</div>
-    <div class="abc-options" id="abcOptions"></div>
+  <span class="game-tag t4">字母學習</span>
+  <div class="score">分數：<span id="s4">0</span></div>
+  <div class="abc-display">
+    <div class="big" id="ab">A</div>
+    <div class="hint" id="hint">🅰️ Apple</div>
+    <div class="abc-ops" id="a1"></div>
   </div>
-  <div id="abcMsg" class="msg"></div>
-  <div style="text-align:center"><button class="btn btn-green" onclick="initAbc()">下一題</button></div>
-</div></div>
-
-<!-- Reflection -->
-<div class="reflection" id="reflection">
-<div class="reflection-box">
-  <h2>📝 心得</h2>
-  <p class="author" style="color:#888;font-size:.95em">81410307 林佳瑩</p>
-  <div class="reflection-grid">
-    <div class="reflect-item">
-      <h3>🎯 製作動機</h3>
-      <p>希望用有趣的方式幫助小朋友學習基礎知識。傳統學習對小朋友來說較枯燥，透過遊戲能讓學習效果更好，因此設計了結合遊戲與學習的網站。</p>
-    </div>
-    <div class="reflect-item">
-      <h3>🔧 製作過程</h3>
-      <p>選擇了數字加法、顏色配對、記憶翻牌和ABC字母四個主題，涵蓋數學、顏色辨識、記憶力和英文基礎。使用HTML、CSS和JavaScript將所有功能整合在一個檔案中。</p>
-    </div>
-    <div class="reflect-item">
-      <h3>💪 遇到的困難</h3>
-      <p>記憶翻牌遊戲中要確保兩張相同卡片不會同時被選取，以及翻牌動畫的計時控制，透過鎖定機制和setTimeout解決。顏色配對則使用隨機排序確保每次排列不同。</p>
-    </div>
-    <div class="reflect-item">
-      <h3>🌟 收穫與心得</h3>
-      <p>學會了站在使用者角度思考，設計兒童介面時按鈕要夠大、顏色要鮮豔、操作要直觀。看著每個遊戲都能正常運作，充滿了成就感。程式設計不只是寫程式，更是解決問題和創造價值的過程。</p>
-    </div>
-  </div>
+  <div id="msg4" class="msg"></div>
+  <div class="ctrl"><button class="btn g" onclick="initAbc()">下一題</button></div>
 </div></div>
 
 <div class="footer">© 2025 兒童遊戲學習網 — 81410307 林佳瑩</div>
 
 <script>
-// ---- Game 1: Math ----
-let mathScore=0;
+// Math
+let sc1=0;
 function initMath(){
-  const a=Math.floor(Math.random()*9)+1,b=Math.floor(Math.random()*9)+1;
-  document.getElementById('num1').textContent=a;document.getElementById('num2').textContent=b;
-  const correct=a+b,opts=[],used=new Set();opts.push(correct);used.add(correct);
-  while(opts.length<4){let v=Math.floor(Math.random()*18)+1;if(!used.has(v)){used.add(v);opts.push(v)}}
-  opts.sort(()=>Math.random()-.5);
-  document.getElementById('mathOptions').innerHTML=opts.map(v=>`<button class="math-opt" onclick="checkMath(${v},${correct},this)">${v}</button>`).join('');
-  document.getElementById('mathMsg').className='msg';
+  let a=Math.floor(Math.random()*9)+1,b=Math.floor(Math.random()*9)+1;
+  document.getElementById('n1').textContent=a;document.getElementById('n2').textContent=b;
+  let c=a+b,o=[],u=new Set();o.push(c);u.add(c);
+  while(o.length<4){let v=Math.floor(Math.random()*18)+1;if(!u.has(v)){u.add(v);o.push(v)}}
+  o.sort(()=>Math.random()-.5);
+  document.getElementById('m1').innerHTML=o.map(v=>`<button onclick="ckM(${v},${c},this)">${v}</button>`).join('');
+  document.getElementById('msg1').className='msg';
 }
-function checkMath(v,c,btn){
-  document.querySelectorAll('#mathOptions .math-opt').forEach(b=>b.disabled=true);
-  if(v===c){btn.classList.add('correct');mathScore++;document.getElementById('mathScore').textContent=mathScore;showMsg('mathMsg','✅ 答對了！很棒！','good')}
-  else{btn.classList.add('wrong');document.querySelectorAll('#mathOptions .math-opt').forEach(b=>{if(parseInt(b.textContent)===c)b.classList.add('correct')});showMsg('mathMsg','❌ 再試試看！','bad')}
+function ckM(v,c,b){
+  document.querySelectorAll('#m1 button').forEach(b=>b.disabled=true);
+  if(v===c){b.classList.add('correct');sc1++;document.getElementById('s1').textContent=sc1;show('msg1','✅ 答對了！很棒！','ok')}
+  else{b.classList.add('wrong');document.querySelectorAll('#m1 button').forEach(b=>{if(parseInt(b.textContent)===c)b.classList.add('correct')});show('msg1','❌ 再試試看！','no')}
 }
-
-// ---- Game 2: Color ----
-const colorNames=['red','orange','yellow','green','blue','purple','pink','brown'];
-let selColor=null,colorMatch=0;
+// Color
+const cols=['red','orange','yellow','green','blue','purple','pink','brown'];
+let sel=null,cm=0;
 function initColor(){
-  selColor=null;colorMatch=0;
-  const shuf=[...colorNames].sort(()=>Math.random()-.5),pairs=[...shuf.slice(0,4),...shuf.slice(0,4)].sort(()=>Math.random()-.5);
-  document.getElementById('colorGame').innerHTML=pairs.map(c=>`<div class="color-card" style="background:${c}" data-color="${c}" onclick="pickColor(this,'${c}')"></div>`).join('');
-  document.getElementById('colorMsg').className='msg';
+  sel=null;cm=0;
+  let s=[...cols].sort(()=>Math.random()-.5),p=[...s.slice(0,4),...s.slice(0,4)].sort(()=>Math.random()-.5);
+  document.getElementById('c1').innerHTML=p.map(c=>`<div class="card" style="background:${c}" data-c="${c}" onclick="pk(this,'${c}')"></div>`).join('');
+  document.getElementById('msg2').className='msg';
 }
-function pickColor(el,c){
+function pk(el,c){
   if(el.classList.contains('matched'))return;
-  if(selColor===null){selColor=el;el.classList.add('selected');return}
-  const first=selColor;
-  if(first===el){el.classList.remove('selected');selColor=null;return}
-  if(first.dataset.color===c){first.classList.add('matched');el.classList.add('matched');first.classList.remove('selected');colorMatch++;selColor=null;if(colorMatch===4)showMsg('colorMsg','🎉 恭喜你完成顏色配對！','good')}
-  else{first.classList.remove('selected');selColor=null}
+  if(sel===null){sel=el;el.classList.add('selected');return}
+  let f=sel;
+  if(f===el){el.classList.remove('selected');sel=null;return}
+  if(f.dataset.c===c){f.classList.add('matched');el.classList.add('matched');f.classList.remove('selected');cm++;sel=null;if(cm===4)show('msg2','🎉 完成顏色配對！','ok')}
+  else{f.classList.remove('selected');sel=null}
 }
-
-// ---- Game 3: Memory ----
-const memEmojis=['🐶','🐱','🐰','🐼','🦁','🐸','🐵','🦊'];
-let memCards,memFlip=[],memLock=0,memMoves=0,memMatch=0;
-function initMemory(){
-  memFlip=[];memLock=0;memMoves=0;memMatch=0;
-  document.getElementById('memMoves').textContent='0';document.getElementById('memMatch').textContent='0';
-  document.getElementById('memMsg').className='msg';
-  memCards=[...memEmojis,...memEmojis].sort(()=>Math.random()-.5);
-  document.getElementById('memoryGrid').innerHTML=memCards.map((e,i)=>`<div class="memory-card" data-idx="${i}" onclick="flipCard(this,${i})"></div>`).join('');
+// Memory
+const emj=['🐶','🐱','🐰','🐼','🦁','🐸','🐵','🦊'];
+let mem=[],flip=[],lock=0,moves=0,mat=0;
+function initMem(){
+  flip=[];lock=0;moves=0;mat=0;
+  document.getElementById('mv').textContent='0';document.getElementById('mc').textContent='0';
+  document.getElementById('msg3').className='msg';
+  mem=[...emj,...emj].sort(()=>Math.random()-.5);
+  document.getElementById('mem').innerHTML=mem.map((e,i)=>`<div class="crd" data-i="${i}" onclick="fl(this,${i})"></div>`).join('');
 }
-function flipCard(el,i){
-  if(memLock||el.classList.contains('flipped')||el.classList.contains('matched'))return;
-  el.textContent=memCards[i];el.classList.add('flipped');memFlip.push(i);
-  if(memFlip.length===2){
-    memLock=1;memMoves++;document.getElementById('memMoves').textContent=memMoves;
-    const [a,b]=memFlip;
-    if(memCards[a]===memCards[b]){document.querySelectorAll('.memory-card')[a].classList.add('matched');document.querySelectorAll('.memory-card')[b].classList.add('matched');memFlip=[];memLock=0;memMatch++;document.getElementById('memMatch').textContent=memMatch;if(memMatch===8)showMsg('memMsg','🎉 恭喜你完成記憶翻牌！花了 '+memMoves+' 步','good')}
-    else{setTimeout(()=>{const ac=document.querySelectorAll('.memory-card')[a],bc=document.querySelectorAll('.memory-card')[b];ac.textContent='';bc.textContent='';ac.classList.remove('flipped');bc.classList.remove('flipped');memFlip=[];memLock=0},700)}
+function fl(el,i){
+  if(lock||el.classList.contains('flip')||el.classList.contains('done'))return;
+  el.textContent=mem[i];el.classList.add('flip');flip.push(i);
+  if(flip.length===2){
+    lock=1;moves++;document.getElementById('mv').textContent=moves;
+    let a=flip[0],b=flip[1],ac=document.querySelectorAll('.crd'),ca=mem[a],cb=mem[b];
+    if(ca===cb){ac[a].classList.add('done');ac[b].classList.add('done');flip=[];lock=0;mat++;document.getElementById('mc').textContent=mat;if(mat===8)show('msg3','🎉 完成！花了 '+moves+' 步','ok')}
+    else{setTimeout(()=>{ac[a].textContent='';ac[b].textContent='';ac[a].classList.remove('flip');ac[b].classList.remove('flip');flip=[];lock=0},700)}
   }
 }
-
-// ---- Game 4: ABC ----
-const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-const abcH={A:'🅰️ Apple',B:'🅱️ Ball',C:'©️ Cat',D:'🇩 Dog',E:'🇪 Egg',F:'🇫 Fish',G:'🇬 Girl',H:'🇭 Hat',I:'🅸 Ice',J:'🇯 Jump',K:'🇰 Kite',L:'🇱 Lion',M:'🇲 Monkey',N:'🇳 Nose',O:'🅾️ Orange',P:'🅿️ Pig',Q:'🇶 Queen',R:'🇷 Rabbit',S:'🇸 Sun',T:'🇹 Tree',U:'🇺 Umbrella',V:'🇻 Violin',W:'🇼 Water',X:'❌ X-ray',Y:'🇾 Yellow',Z:'🇿 Zebra'};
-let abcScore=0;
+// ABC
+const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const ah={A:'🅰️ Apple',B:'🅱️ Ball',C:'©️ Cat',D:'🇩 Dog',E:'🇪 Egg',F:'🇫 Fish',G:'🇬 Girl',H:'🇭 Hat',I:'🅸 Ice',J:'🇯 Jump',K:'🇰 Kite',L:'🇱 Lion',M:'🇲 Monkey',N:'🇳 Nose',O:'🅾️ Orange',P:'🅿️ Pig',Q:'🇶 Queen',R:'🇷 Rabbit',S:'🇸 Sun',T:'🇹 Tree',U:'🇺 Umbrella',V:'🇻 Violin',W:'🇼 Water',X:'❌ X-ray',Y:'🇾 Yellow',Z:'🇿 Zebra'};
+let sc4=0;
 function initAbc(){
-  const l=letters[Math.floor(Math.random()*26)];
-  document.getElementById('abcLetter').textContent=l;document.getElementById('abcHint').textContent=abcH[l];
-  const correct=l.toLowerCase(),wrongs=[];
-  while(wrongs.length<3){const r=letters[Math.floor(Math.random()*26)].toLowerCase();if(r!==correct&&!wrongs.includes(r))wrongs.push(r)}
-  const opts=[correct,...wrongs].sort(()=>Math.random()-.5);
-  document.getElementById('abcOptions').innerHTML=opts.map(v=>`<button class="abc-opt" onclick="checkAbc('${v}','${correct}',this)">${v}</button>`).join('');
-  document.getElementById('abcMsg').className='msg';
+  let l=abc[Math.floor(Math.random()*26)];
+  document.getElementById('ab').textContent=l;document.getElementById('hint').textContent=ah[l];
+  let c=l.toLowerCase(),w=[];
+  while(w.length<3){let r=abc[Math.floor(Math.random()*26)].toLowerCase();if(r!==c&&!w.includes(r))w.push(r)}
+  let o=[c,...w].sort(()=>Math.random()-.5);
+  document.getElementById('a1').innerHTML=o.map(v=>`<button onclick="ckA('${v}','${c}',this)">${v}</button>`).join('');
+  document.getElementById('msg4').className='msg';
 }
-function checkAbc(v,c,btn){
-  document.querySelectorAll('#abcOptions .abc-opt').forEach(b=>b.disabled=true);
-  if(v===c){btn.classList.add('correct');abcScore++;document.getElementById('abcScore').textContent=abcScore;showMsg('abcMsg','✅ 答對了！很棒！','good')}
-  else{btn.classList.add('wrong');document.querySelectorAll('#abcOptions .abc-opt').forEach(b=>{if(b.textContent===c)b.classList.add('correct')});showMsg('abcMsg','❌ 答案是 '+c.toUpperCase(),'bad')}
+function ckA(v,c,b){
+  document.querySelectorAll('#a1 button').forEach(b=>b.disabled=true);
+  if(v===c){b.classList.add('correct');sc4++;document.getElementById('s4').textContent=sc4;show('msg4','✅ 答對了！很棒！','ok')}
+  else{b.classList.add('wrong');document.querySelectorAll('#a1 button').forEach(b=>{if(b.textContent===c)b.classList.add('correct')});show('msg4','❌ 答案是 '+c.toUpperCase(),'no')}
 }
-
-function showMsg(id,m,t){const r=document.getElementById(id);r.textContent=m;r.className='msg show '+t}
-
-initMath();initColor();initMemory();initAbc();
+function show(id,m,t){let r=document.getElementById(id);r.textContent=m;r.className='msg show '+t}
+initMath();initColor();initMem();initAbc();
 </script>
 </body>
 </html>
