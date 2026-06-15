@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>兒童遊戲學習網</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;justify-content:center;align-items:flex-start;padding:20px}
+.wrapper{width:100%;max-width:1100px;display:flex;gap:20px;align-items:stretch}
+.container{flex:1;max-width:800px;background:rgba(255,255,255,.95);border-radius:30px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
+.page{display:none}.page.active{display:block}
+h1{font-size:2.5em;color:#4a3790;margin-bottom:5px}
+h2{font-size:1.8em;color:#5a47a0;margin-bottom:20px}
+.author{color:#888;font-size:1em;margin-bottom:25px}
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px}
+.game-card{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);border-radius:20px;padding:25px;color:#fff;cursor:pointer;transition:.3s;box-shadow:0 5px 15px rgba(0,0,0,.15)}
+.game-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,.25)}
+.game-card:nth-child(2){background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+.game-card:nth-child(3){background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%);color:#333}
+.game-card:nth-child(4){background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);color:#333}
+.game-card .icon{font-size:3em;margin-bottom:10px}
+.game-card .name{font-size:1.3em;font-weight:700}
+.game-card .desc{font-size:.85em;opacity:.9;margin-top:5px}
+.back-btn{background:#5a47a0;color:#fff;border:none;padding:10px 25px;border-radius:50px;font-size:1em;cursor:pointer;transition:.3s;margin-bottom:15px}
+.back-btn:hover{background:#4a3790;transform:scale(1.05)}
+/* Game 1 - 加法遊戲 */
+.math-area{margin:20px 0}.math-num{font-size:3em;font-weight:700;color:#4a3790}.math-op{font-size:2em;color:#f5576c;margin:0 10px}.math-input{width:120px;font-size:2em;text-align:center;border:3px solid #667eea;border-radius:15px;padding:5px;outline:none}.math-input:focus{border-color:#764ba2}.math-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:300px;margin:15px auto}.math-opt{background:#667eea;color:#fff;font-size:1.8em;font-weight:700;padding:15px;border-radius:15px;cursor:pointer;transition:.3s;border:none}.math-opt:hover{transform:scale(1.05);background:#764ba2}.math-opt.correct{background:#43e97b}.math-opt.wrong{background:#f5576c}.math-score{font-size:1.2em;color:#555;margin:10px 0}.math-score span{color:#4a3790;font-weight:700}
+/* Game 2 - 顏色配對 */
+.color-game{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0}
+.color-card{width:90px;height:90px;border-radius:18px;cursor:pointer;transition:.3s;border:3px solid transparent;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.color-card:hover{transform:scale(1.1)}.color-card.matched{border-color:#43e97b;opacity:.6;pointer-events:none}
+.color-card.selected{border-color:#333;transform:scale(1.1)}
+.color-target{width:120px;height:120px;border-radius:20px;margin:10px auto;border:4px solid #ddd}
+/* Game 3 - 記憶翻牌 */
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:400px;margin:20px auto}
+.memory-card{aspect-ratio:1;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:15px;cursor:pointer;transition:.4s;display:flex;align-items:center;justify-content:center;font-size:2.5em;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.15);user-select:none}
+.memory-card.flipped{background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.1);color:#333;transform:rotateY(180deg)}
+.memory-card.matched{background:#43e97b;color:#fff;transform:rotateY(180deg);pointer-events:none}
+/* Game 4 - ABC 遊戲 */
+.abc-area{margin:20px 0}.abc-letter{font-size:5em;font-weight:700;color:#4a3790;margin-bottom:10px}.abc-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:300px;margin:15px auto}
+.abc-opt{background:#fa709a;color:#fff;font-size:1.3em;font-weight:700;padding:12px;border-radius:15px;cursor:pointer;transition:.3s;border:none}
+.abc-opt:hover{transform:scale(1.05);background:#f5576c}.abc-opt.correct{background:#43e97b}.abc-opt.wrong{background:#999}
+.abc-hint{font-size:2em;margin-bottom:5px}
+.result-msg{font-size:1.1em;padding:10px;border-radius:12px;margin:10px 0;display:none}
+.result-msg.show{display:block}.result-msg.good{background:#d4edda;color:#155724}.result-msg.bad{background:#f8d7da;color:#721c24}
+.newgame-btn{background:#43e97b;color:#fff;border:none;padding:10px 25px;border-radius:50px;font-size:1em;cursor:pointer;transition:.3s;margin-top:10px}
+.newgame-btn:hover{background:#38d9a0;transform:scale(1.05)}
+/* 心得側邊欄 */
+.sidebar{width:280px;background:rgba(255,255,255,.95);border-radius:30px;padding:25px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:left;overflow-y:auto;max-height:90vh}
+.sidebar h2{font-size:1.5em;color:#4a3790;margin-bottom:15px;text-align:center}
+.sidebar h3{font-size:1.1em;color:#764ba2;margin:15px 0 8px}
+.sidebar p{font-size:.9em;color:#444;line-height:1.7;margin-bottom:8px}
+.sidebar .author{text-align:center;font-size:.85em;margin-bottom:15px}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<div class="container" id="app">
+  <!-- 主頁 -->
+  <div class="page active" id="page-home">
+    <h1>🎮 兒童遊戲學習網</h1>
+    <p class="author">製作人：81410307 林佳瑩</p>
+    <p style="color:#666;margin-bottom:20px">Choose a game to start learning!</p>
+    <div class="game-grid">
+      <div class="game-card" onclick="showGame('math')">
+        <div class="icon">🔢</div>
+        <div class="name">數字加法</div>
+        <div class="desc">學習加法運算</div>
+      </div>
+      <div class="game-card" onclick="showGame('color')">
+        <div class="icon">🎨</div>
+        <div class="name">顏色配對</div>
+        <div class="desc">認識顏色名稱</div>
+      </div>
+      <div class="game-card" onclick="showGame('memory')">
+        <div class="icon">🧠</div>
+        <div class="name">記憶翻牌</div>
+        <div class="desc">訓練記憶力</div>
+      </div>
+      <div class="game-card" onclick="showGame('abc')">
+        <div class="icon">🔤</div>
+        <div class="name">ABC字母</div>
+        <div class="desc">認識英文字母</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 遊戲1：數字加法 -->
+  <div class="page" id="page-math">
+    <button class="back-btn" onclick="showHome()">← 回主頁</button>
+    <h2>🔢 數字加法</h2>
+    <div class="math-score">分數：<span id="mathScore">0</span></div>
+    <div class="math-area">
+      <span class="math-num" id="num1">3</span>
+      <span class="math-op">+</span>
+      <span class="math-num" id="num2">5</span>
+      <span class="math-op">=</span>
+      <span class="math-num" style="color:#f5576c">?</span>
+    </div>
+    <div class="math-options" id="mathOptions"></div>
+    <div id="mathResult" class="result-msg"></div>
+    <button class="newgame-btn" onclick="initMath()">下一題</button>
+  </div>
+
+  <!-- 遊戲2：顏色配對 -->
+  <div class="page" id="page-color">
+    <button class="back-btn" onclick="showHome()">← 回主頁</button>
+    <h2>🎨 顏色配對</h2>
+    <p style="margin-bottom:10px;color:#555">找到相同顏色的卡片配對！</p>
+    <div class="color-game" id="colorGame"></div>
+    <div id="colorResult" class="result-msg"></div>
+    <button class="newgame-btn" onclick="initColor()">重新開始</button>
+  </div>
+
+  <!-- 遊戲3：記憶翻牌 -->
+  <div class="page" id="page-memory">
+    <button class="back-btn" onclick="showHome()">← 回主頁</button>
+    <h2>🧠 記憶翻牌</h2>
+    <p style="margin-bottom:10px;color:#555">翻開兩張相同的卡片即可消除！</p>
+    <p style="font-size:1.1em;margin-bottom:10px">步數：<strong id="memoryMoves">0</strong>　配對：<strong id="memoryMatches">0</strong>/8</p>
+    <div class="memory-grid" id="memoryGrid"></div>
+    <div id="memoryResult" class="result-msg"></div>
+    <button class="newgame-btn" onclick="initMemory()">重新開始</button>
+  </div>
+
+  <!-- 遊戲4：ABC字母 -->
+  <div class="page" id="page-abc">
+    <button class="back-btn" onclick="showHome()">← 回主頁</button>
+    <h2>🔤 ABC字母</h2>
+    <div class="abc-score" style="font-size:1.2em;color:#555">分數：<strong id="abcScore">0</strong></div>
+    <div class="abc-letter" id="abcLetter">A</div>
+    <p class="abc-hint" id="abcHint">🅰️</p>
+    <div class="abc-options" id="abcOptions"></div>
+    <div id="abcResult" class="result-msg"></div>
+    <button class="newgame-btn" onclick="initAbc()">下一題</button>
+  </div>
+</div>
+
+<div class="sidebar">
+  <h2>📝 心得</h2>
+  <p class="author">81410307 林佳瑩</p>
+
+  <h3>🎯 製作動機</h3>
+  <p>這次製作兒童遊戲學習網，希望用有趣的方式幫助小朋友學習基礎知識。傳統學習對小朋友來說較枯燥，透過遊戲能讓學習效果更好。</p>
+
+  <h3>🔧 製作過程</h3>
+  <p>選擇了數字加法、顏色配對、記憶翻牌和ABC字母四個主題，涵蓋數學、顏色辨識、記憶力和英文基礎。使用HTML、CSS和JavaScript將所有功能整合在一個檔案中。</p>
+
+  <h3>💪 遇到的困難</h3>
+  <p>記憶翻牌遊戲中要確保兩張相同卡片不會同時被選取，以及翻牌動畫的計時控制，透過鎖定機制和setTimeout解決。顏色配對的隨機排列則使用Fisher-Yates演算法。</p>
+
+  <h3>🌟 收穫</h3>
+  <p>學會了站在使用者角度思考，設計兒童介面時按鈕要夠大、顏色要鮮豔、操作要直觀。看著每個遊戲都能正常運作，充滿了成就感。程式設計不只是寫程式，更是解決問題和創造價值的過程。</p>
+</div>
+
+</div>
+
+<script>
+// ---- 頁面切換 ----
+function showHome(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-home').classList.add('active')}
+function showGame(g){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+g).classList.add('active')}
+
+// ---- 遊戲1：數字加法 ----
+let mathScore=0;
+function initMath(){
+  const a=Math.floor(Math.random()*9)+1,b=Math.floor(Math.random()*9)+1;
+  document.getElementById('num1').textContent=a;document.getElementById('num2').textContent=b;
+  const correct=a+b,opts=[],used=new Set();opts.push(correct);used.add(correct);
+  while(opts.length<4){let v=Math.floor(Math.random()*18)+1;if(!used.has(v)){used.add(v);opts.push(v)}}
+  opts.sort(()=>Math.random()-.5);
+  const html=opts.map(v=>`<button class="math-opt" onclick="checkMath(${v},${correct},this)">${v}</button>`).join('');
+  document.getElementById('mathOptions').innerHTML=html;
+  document.getElementById('mathResult').className='result-msg';
+}
+function checkMath(v,c,btn){
+  document.querySelectorAll('.math-opt').forEach(b=>b.disabled=true);
+  if(v===c){btn.classList.add('correct');mathScore++;document.getElementById('mathScore').textContent=mathScore;showMathResult('✅ 答對了！很棒！','good')}
+  else{btn.classList.add('wrong');document.querySelectorAll('.math-opt').forEach(b=>{if(parseInt(b.textContent)===c)b.classList.add('correct')});showMathResult('❌ 再試試看！','bad')}
+}
+function showMathResult(m,t){const r=document.getElementById('mathResult');r.textContent=m;r.className='result-msg show '+t}
+
+// ---- 遊戲2：顏色配對 ----
+const colorNames=['red','orange','yellow','green','blue','purple','pink','brown'];
+const colorMap={red:'紅色',orange:'橘色',yellow:'黃色',green:'綠色',blue:'藍色',purple:'紫色',pink:'粉紅色',brown:'棕色'};
+let selectedColor=null,colorMatches=0;
+function initColor(){
+  selectedColor=null;colorMatches=0;
+  const shuffled=[...colorNames].sort(()=>Math.random()-.5);
+  const pairs=[...shuffled.slice(0,4),...shuffled.slice(0,4)].sort(()=>Math.random()-.5);
+  const html=pairs.map(c=>`<div class="color-card" style="background:${c}" data-color="${c}" onclick="pickColor(this,'${c}')"></div>`).join('');
+  document.getElementById('colorGame').innerHTML=html;
+  document.getElementById('colorResult').className='result-msg';
+}
+function pickColor(el,c){
+  if(el.classList.contains('matched'))return;
+  if(selectedColor===null){selectedColor=el;el.classList.add('selected');return}
+  const first=selectedColor;const fc=first.dataset.color;
+  if(first===el){el.classList.remove('selected');selectedColor=null;return}
+  if(fc===c){first.classList.add('matched');el.classList.add('matched');first.classList.remove('selected');colorMatches++;selectedColor=null;checkColorWin()}
+  else{first.classList.remove('selected');selectedColor=null}
+}
+function checkColorWin(){
+  if(colorMatches===4){const r=document.getElementById('colorResult');r.textContent='🎉 恭喜你完成顏色配對！';r.className='result-msg show good'}
+}
+
+// ---- 遊戲3：記憶翻牌 ----
+const memEmojis=['🐶','🐱','🐰','🐼','🦁','🐸','🐵','🦊'];
+let memCards=[],memFlipped=[],memLocked=false,memMoves=0,memMatches=0;
+function initMemory(){
+  memFlipped=[];memLocked=false;memMoves=0;memMatches=0;
+  document.getElementById('memoryMoves').textContent='0';document.getElementById('memoryMatches').textContent='0/8';
+  document.getElementById('memoryResult').className='result-msg';
+  const pairs=[...memEmojis,...memEmojis].sort(()=>Math.random()-.5);
+  memCards=pairs;
+  const html=pairs.map((e,i)=>`<div class="memory-card" data-index="${i}" onclick="flipCard(this,${i})"></div>`).join('');
+  document.getElementById('memoryGrid').innerHTML=html;
+}
+function flipCard(el,i){
+  if(memLocked||el.classList.contains('flipped')||el.classList.contains('matched'))return;
+  el.textContent=memCards[i];el.classList.add('flipped');memFlipped.push(i);
+  if(memFlipped.length===2){
+    memLocked=true;memMoves++;document.getElementById('memoryMoves').textContent=memMoves;
+    const [a,b]=memFlipped;const ca=memCards[a],cb=memCards[b];
+    if(ca===cb){document.querySelectorAll('.memory-card')[a].classList.add('matched');document.querySelectorAll('.memory-card')[b].classList.add('matched');memFlipped=[];memLocked=false;memMatches++;document.getElementById('memoryMatches').textContent=memMatches+'/8';checkMemoryWin()}
+    else{setTimeout(()=>{const ac=document.querySelectorAll('.memory-card')[a],bc=document.querySelectorAll('.memory-card')[b];ac.textContent='';bc.textContent='';ac.classList.remove('flipped');bc.classList.remove('flipped');memFlipped=[];memLocked=false},800)}
+  }
+}
+function checkMemoryWin(){
+  if(memMatches===8){const r=document.getElementById('memoryResult');r.textContent='🎉 恭喜你完成了記憶翻牌！花了 '+memMoves+' 步';r.className='result-msg show good'}
+}
+
+// ---- 遊戲4：ABC字母 ----
+const letters=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+const abcHints={A:'🅰️',B:'🅱️',C:'©️',D:'🇩',E:'🇪',F:'🇫',G:'🇬',H:'🇭',I:'🅸',J:'🇯',K:'🇰',L:'🇱',M:'🇲',N:'🇳',O:'🅾️',P:'🅿️',Q:'🇶',R:'🇷',S:'🇸',T:'🇹',U:'🇺',V:'🇻',W:'🇼',X:'❌',Y:'🇾',Z:'🇿'};
+const abcWords={A:'Apple',B:'Ball',C:'Cat',D:'Dog',E:'Egg',F:'Fish',G:'Girl',H:'Hat',I:'Ice',J:'Jump',K:'Kite',L:'Lion',M:'Monkey',N:'Nose',O:'Orange',P:'Pig',Q:'Queen',R:'Rabbit',S:'Sun',T:'Tree',U:'Umbrella',V:'Violin',W:'Water',X:'X-ray',Y:'Yellow',Z:'Zebra'};
+let abcScore=0;
+function initAbc(){
+  const l=letters[Math.floor(Math.random()*26)];
+  document.getElementById('abcLetter').textContent=l;
+  document.getElementById('abcHint').textContent=abcHints[l]+' '+abcWords[l];
+  const correct=l.toLowerCase(),wrongs=[];
+  const allLow=letters.map(l=>l.toLowerCase());
+  while(wrongs.length<3){const r=allLow[Math.floor(Math.random()*26)];if(r!==correct&&!wrongs.includes(r))wrongs.push(r)}
+  const opts=[correct,...wrongs].sort(()=>Math.random()-.5);
+  const html=opts.map(v=>`<button class="abc-opt" onclick="checkAbc('${v}','${correct}',this)">${v}</button>`).join('');
+  document.getElementById('abcOptions').innerHTML=html;
+  document.getElementById('abcResult').className='result-msg';
+}
+function checkAbc(v,c,btn){
+  document.querySelectorAll('.abc-opt').forEach(b=>b.disabled=true);
+  if(v===c){btn.classList.add('correct');abcScore++;document.getElementById('abcScore').textContent=abcScore;showAbcResult('✅ 答對了！很棒！','good')}
+  else{btn.classList.add('wrong');document.querySelectorAll('.abc-opt').forEach(b=>{if(b.textContent===c)b.classList.add('correct')});showAbcResult('❌ 答案是 '+c.toUpperCase(),'bad')}
+}
+function showAbcResult(m,t){const r=document.getElementById('abcResult');r.textContent=m;r.className='result-msg show '+t}
+
+// ---- 初始化所有遊戲 ----
+initMath();initColor();initMemory();initAbc();
+</script>
+</body>
+</html>
